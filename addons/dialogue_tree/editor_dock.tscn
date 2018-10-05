@@ -1,0 +1,115 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://addons/dialogue_tree/editor_dock.gd" type="Script" id=1]
+[ext_resource path="res://addons/dialogue_tree/scenes/EndNode.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/dialogue_tree/scenes/StartNode.tscn" type="PackedScene" id=3]
+
+[node name="Editor Dock" type="Panel"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -1.0
+margin_top = -1.0
+margin_right = 1023.0
+margin_bottom = 599.0
+rect_min_size = Vector2( 0, 200 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 1 )
+_sections_unfolded = [ "Margin", "Rect", "Size Flags", "custom_styles" ]
+
+[node name="TopBar" type="Panel" parent="." index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="TopContainer" type="HBoxContainer" parent="TopBar" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+alignment = 0
+
+[node name="MenuButton" type="MenuButton" parent="TopBar/TopContainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 37.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+action_mode = 0
+enabled_focus_mode = 0
+shortcut = null
+group = null
+text = "Add"
+flat = true
+align = 1
+items = [ "Basic Dialogue", null, 0, false, false, 0, 0, null, "", false, "Conditonal", null, 0, false, false, 1, 0, null, "", false, "Choice", null, 0, false, false, 2, 0, null, "", false, "Random", null, 0, false, false, 3, 0, null, "", false ]
+
+[node name="PrimaryGraphEditor" type="GraphEdit" parent="." index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 21.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+right_disconnects = true
+scroll_offset = Vector2( 0, 0 )
+snap_distance = 20
+use_snap = true
+zoom = 1.0
+
+[node name="EndNode" parent="PrimaryGraphEditor" index="0" instance=ExtResource( 2 )]
+
+margin_right = 55.0
+margin_bottom = 43.0
+mouse_filter = 1
+
+[node name="StartNode" parent="PrimaryGraphEditor" index="1" instance=ExtResource( 3 )]
+
+margin_right = 61.0
+margin_bottom = 43.0
+mouse_filter = 1
+
+[connection signal="connection_request" from="PrimaryGraphEditor" to="." method="_on_PrimaryGraphEditor_connection_request"]
+
+[connection signal="disconnection_request" from="PrimaryGraphEditor" to="." method="_on_PrimaryGraphEditor_disconnection_request"]
+
+
