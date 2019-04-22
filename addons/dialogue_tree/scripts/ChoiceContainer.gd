@@ -15,7 +15,9 @@ func save_data():
 	var dict = {
 		"Conditional" : $Conditional.text,
 		"ToolTip" : $ToolTip.text,
+		"FormattedToolTip": $ToolTip.text,
 		"Dialogue" : $Dialogue.text,
+		"FormattedDialogue" : $Dialogue.text
 	}
 	
 	return dict
@@ -24,7 +26,9 @@ func export_values():
 	var dict = {
 		"Conditional" : $Conditional.text,
 		"ToolTip" : $ToolTip.text,
+		"FormattedToolTip": $ToolTip.text,
 		"Dialogue" : $Dialogue.text,
+		"FormattedDialogue" : $Dialogue.text,
 		"PassCondition" : true
 	}
 	

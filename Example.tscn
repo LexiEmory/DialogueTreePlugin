@@ -7,21 +7,9 @@
 [ext_resource path="res://addons/dialogue_tree/resource/dialogue_tree.gd" type="Script" id=5]
 
 [sub_resource type="Animation" id=1]
-
 resource_name = "New Anim"
-length = 1.0
-loop = false
-step = 0.1
-
-[sub_resource type="Animation" id=2]
-
-resource_name = "New Anim2"
-length = 1.0
-loop = false
-step = 0.1
 
 [sub_resource type="Resource" id=3]
-
 script = ExtResource( 5 )
 __meta__ = {
 "_editor_icon": ExtResource( 4 )
@@ -124,7 +112,6 @@ DialogueTree = {
 }
 
 [sub_resource type="Resource" id=4]
-
 script = ExtResource( 5 )
 __meta__ = {
 "_editor_icon": ExtResource( 4 )
@@ -380,58 +367,208 @@ DialogueTree = {
 "start_index": 7
 }
 
-[node name="TestingWorld" type="Node2D" index="0"]
+[sub_resource type="Resource" id=5]
+script = ExtResource( 5 )
+__meta__ = {
+"_editor_icon": ExtResource( 4 )
+}
+connections = [ {
+"from": "StartNode",
+"from_port": 0,
+"to": "BasicDialogue",
+"to_port": 0
+}, {
+"from": "ChoiceDialogue",
+"from_port": 2,
+"to": "EndNode",
+"to_port": 0
+}, {
+"from": "ChoiceDialogue",
+"from_port": 0,
+"to": "BasicDialogue2",
+"to_port": 0
+}, {
+"from": "ChoiceDialogue",
+"from_port": 1,
+"to": "BasicDialogue3",
+"to_port": 0
+}, {
+"from": "BasicDialogue2",
+"from_port": 0,
+"to": "BasicDialogue",
+"to_port": 0
+}, {
+"from": "BasicDialogue3",
+"from_port": 0,
+"to": "BasicDialogue",
+"to_port": 0
+}, {
+"from": "BasicDialogue",
+"from_port": 0,
+"to": "ChoiceDialogue",
+"to_port": 0
+} ]
+Nodes = [ {
+"filename": "res://addons/dialogue_tree/scenes/EndNode.tscn",
+"name": "EndNode",
+"rect_size_x": 82.0,
+"rect_size_y": 55.0,
+"rect_x": 992.094,
+"rect_y": -92.25
+}, {
+"filename": "res://addons/dialogue_tree/scenes/StartNode.tscn",
+"name": "StartNode",
+"rect_size_x": 88.0,
+"rect_size_y": 55.0,
+"rect_x": 39.091,
+"rect_y": -53.25
+}, {
+"Actor": "",
+"Dialogue": "I've got {apple} apples in my hand and {basket} apples in my basket. What should I do ?",
+"FormattedDialogue": "I've got {apple} apples in my hand and {basket} apples in my basket. What should I do ?",
+"RefName": "",
+"filename": "res://addons/dialogue_tree/scenes/BasicDialogue.tscn",
+"name": "BasicDialogue",
+"rect_size_x": 172.0,
+"rect_size_y": 114.0,
+"rect_x": 192.091,
+"rect_y": -152.25
+}, {
+"Conditonal": true,
+"RefName": "",
+"choices": [ {
+"Conditional": "{apple} > 0",
+"Dialogue": "Put 1 apple in the basket",
+"FormattedDialogue": "Put 1 apple in the basket",
+"FormattedToolTip": "You have {apple} apples in your hand",
+"ToolTip": "You have {apple} apples in your hand"
+}, {
+"Conditional": "{basket} > 0",
+"Dialogue": "Take 1 apple from the basket",
+"FormattedDialogue": "Take 1 apple from the basket",
+"FormattedToolTip": "You have {basket} apples in your basket",
+"ToolTip": "You have {basket} apples in your basket"
+}, {
+"Conditional": "true",
+"Dialogue": "Quit",
+"FormattedDialogue": "Quit",
+"FormattedToolTip": "You can quit now",
+"ToolTip": "You can quit now"
+} ],
+"filename": "res://addons/dialogue_tree/scenes/ChoiceDialogue.tscn",
+"name": "ChoiceDialogue",
+"rect_size_x": 442.0,
+"rect_size_y": 215.0,
+"rect_x": 212.091,
+"rect_y": 67.75
+}, {
+"Actor": "",
+"Dialogue": "You put 1 apple in the basket",
+"FormattedDialogue": "You put 1 apple in the basket",
+"RefName": "Basket",
+"filename": "res://addons/dialogue_tree/scenes/BasicDialogue.tscn",
+"name": "BasicDialogue2",
+"rect_size_x": 172.0,
+"rect_size_y": 114.0,
+"rect_x": 692.091,
+"rect_y": -232.25
+}, {
+"Actor": "",
+"Dialogue": "You take 1 apple from the basket",
+"FormattedDialogue": "You take 1 apple from the basket",
+"RefName": "Apple",
+"filename": "res://addons/dialogue_tree/scenes/BasicDialogue.tscn",
+"name": "BasicDialogue3",
+"rect_size_x": 172.0,
+"rect_size_y": 114.0,
+"rect_x": 748.353,
+"rect_y": 83.25
+} ]
+DialogueTree = {
+"dialogue": [ {
+"Actor": "",
+"Dialogue": "I've got {apple} apples in my hand and {basket} apples in my basket. What should I do ?",
+"FormattedDialogue": "I've got {apple} apples in my hand and {basket} apples in my basket. What should I do ?",
+"NodeName": "BasicDialogue",
+"Ref": "",
+"next": 1
+}, {
+"Choices": [ {
+"Conditional": "{apple} > 0",
+"Dialogue": "Put 1 apple in the basket",
+"FormattedDialogue": "Put 1 apple in the basket",
+"FormattedToolTip": "You have {apple} apples in your hand",
+"PassCondition": true,
+"ToolTip": "You have {apple} apples in your hand",
+"next": 2
+}, {
+"Conditional": "{basket} > 0",
+"Dialogue": "Take 1 apple from the basket",
+"FormattedDialogue": "Take 1 apple from the basket",
+"FormattedToolTip": "You have {basket} apples in your basket",
+"PassCondition": true,
+"ToolTip": "You have {basket} apples in your basket",
+"next": 3
+}, {
+"Conditional": "true",
+"Dialogue": "Quit",
+"FormattedDialogue": "Quit",
+"FormattedToolTip": "You can quit now",
+"PassCondition": true,
+"ToolTip": "You can quit now",
+"next": "End"
+} ],
+"Conditonal": true,
+"NodeName": "ChoiceDialogue",
+"Ref": ""
+}, {
+"Actor": "",
+"Dialogue": "You put 1 apple in the basket",
+"FormattedDialogue": "You put 1 apple in the basket",
+"NodeName": "BasicDialogue2",
+"Ref": "Basket",
+"next": 0
+}, {
+"Actor": "",
+"Dialogue": "You take 1 apple from the basket",
+"FormattedDialogue": "You take 1 apple from the basket",
+"NodeName": "BasicDialogue3",
+"Ref": "Apple",
+"next": 0
+} ],
+"start_index": 0
+}
 
+[node name="TestingWorld" type="Node2D"]
 script = ExtResource( 1 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="0"]
-
-root_node = NodePath("..")
-autoplay = ""
-playback_process_mode = 1
-playback_default_blend_time = 0.0
-playback_speed = 1.0
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 "anims/New Anim" = SubResource( 1 )
-blend_times = [  ]
 
-[node name="TEst" type="AnimationPlayer" parent="." index="1"]
-
-root_node = NodePath("..")
-autoplay = ""
-playback_process_mode = 1
-playback_default_blend_time = 0.0
-playback_speed = 1.0
-"anims/New Anim2" = SubResource( 2 )
-blend_times = [  ]
-
-[node name="Dialogue" type="Node" parent="." index="2"]
-
+[node name="Dialogue" type="Node" parent="."]
 script = ExtResource( 2 )
 __meta__ = {
 "_editor_icon": ExtResource( 3 )
 }
 DialogueResource = SubResource( 3 )
-RandomizeBeforeRandom = false
 
-[node name="Dialogue2" type="Node" parent="." index="3"]
-
+[node name="Dialogue2" type="Node" parent="."]
 script = ExtResource( 2 )
 __meta__ = {
 "_editor_icon": ExtResource( 3 )
 }
 DialogueResource = SubResource( 4 )
-RandomizeBeforeRandom = false
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." index="4"]
+[node name="Dialogue3" type="Node" parent="."]
+script = ExtResource( 2 )
+__meta__ = {
+"_editor_icon": ExtResource( 3 )
+}
+DialogueResource = SubResource( 5 )
 
-layer = 1
-offset = Vector2( 0, 0 )
-rotation = 0.0
-scale = Vector2( 1, 1 )
-transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="DialogueBasic" type="Panel" parent="CanvasLayer" index="0"]
-
+[node name="DialogueBasic" type="Panel" parent="CanvasLayer"]
 visible = false
 anchor_left = 0.5
 anchor_top = 1.0
@@ -441,33 +578,14 @@ margin_left = -270.0
 margin_top = -101.0
 margin_right = 270.0
 margin_bottom = -14.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 
-[node name="Label" type="Label" parent="CanvasLayer/DialogueBasic" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
+[node name="Label" type="Label" parent="CanvasLayer/DialogueBasic"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 align = 1
 valign = 1
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
 
-[node name="ChoiceBasic" type="Panel" parent="CanvasLayer" index="1"]
-
+[node name="ChoiceBasic" type="Panel" parent="CanvasLayer"]
 visible = false
 anchor_left = 0.5
 anchor_top = 1.0
@@ -477,44 +595,23 @@ margin_left = -270.0
 margin_top = -146.0
 margin_right = 270.0
 margin_bottom = -14.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ChoiceBasic" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ChoiceBasic"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 alignment = 1
 
-[node name="NextTimer" type="Timer" parent="CanvasLayer" index="2"]
-
-process_mode = 1
+[node name="NextTimer" type="Timer" parent="CanvasLayer"]
 wait_time = 5.0
 one_shot = true
-autostart = false
-
 [connection signal="Choice_Next" from="Dialogue2" to="." method="_on_Dialogue2_Choice_Next"]
-
 [connection signal="Conditonal_Data_Needed" from="Dialogue2" to="." method="_on_Dialogue2_Conditonal_Data_Needed"]
-
 [connection signal="Dialogue_Ended" from="Dialogue2" to="." method="_on_Dialogue2_Dialogue_Ended"]
-
 [connection signal="Dialogue_Next" from="Dialogue2" to="." method="_on_Dialogue2_Dialogue_Next"]
-
 [connection signal="Dialogue_Started" from="Dialogue2" to="." method="_on_Dialogue2_Dialogue_Started"]
-
+[connection signal="Choice_Next" from="Dialogue3" to="." method="_on_Dialogue2_Choice_Next"]
+[connection signal="Conditonal_Data_Needed" from="Dialogue3" to="." method="_on_Dialogue2_Conditonal_Data_Needed"]
+[connection signal="Dialogue_Ended" from="Dialogue3" to="." method="_on_Dialogue2_Dialogue_Ended"]
+[connection signal="Dialogue_Next" from="Dialogue3" to="." method="_on_Dialogue2_Dialogue_Next"]
+[connection signal="Dialogue_Started" from="Dialogue3" to="." method="_on_Dialogue2_Dialogue_Started"]
 [connection signal="timeout" from="CanvasLayer/NextTimer" to="." method="_on_NextTimer_timeout"]
-
-

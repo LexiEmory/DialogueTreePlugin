@@ -100,7 +100,9 @@ func _process_next(nextDialogue, nextIndex):
 	elif nextDialogue.has("failnext"):
 		queued_for_conditonal = true
 		emit_signal("Conditonal_Data_Needed")
+		
 	else:
+		emit_signal("Conditonal_Data_Needed")
 		emit_signal("Dialogue_Next", nextDialogue.Ref, nextDialogue.Actor, nextDialogue.Dialogue)
 
 # used to end the dialogue prematurely
@@ -117,6 +119,8 @@ func send_conditonal_data(dict):
 		if current_node.has("Choices"):
 			var ChoicesNew = current_node.Choices
 			for i in ChoicesNew:
+				i["Dialogue"] = i.FormattedDialogue.format(dict)
+				i["ToolTip"] = i.FormattedToolTip.format(dict)
 				i["PassCondition"] = evaluate(str(i["Conditional"]).format(dict))
 			emit_signal("Choice_Next", current_node.Ref, ChoicesNew)
 		elif current_node.has("failnext"):
@@ -133,7 +137,9 @@ func send_conditonal_data(dict):
 				choicePassed =  evaluate(str(current_node["RandomChoices"][selectedChoice]["Conditional"]).format(dict))
 			
 			next_dialogue(selectedChoice)
-
+	if "Dialogue" in current_node :	
+		current_node.Dialogue = current_node.FormattedDialogue.format(dict)
+		
 # evaluates a string in gdscript
 func evaluate(input):
 	var script = GDScript.new()
