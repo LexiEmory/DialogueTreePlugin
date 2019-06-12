@@ -54,9 +54,17 @@ func _on_menubutton_item_pressed(id):
 
 # when there is a connection request 
 func _on_PrimaryGraphEditor_connection_request(from, from_slot, to, to_slot):
+	var all_connections = $PrimaryGraphEditor.get_connection_list() 	# {from_port: 0, from: "GraphNode name 0", to_port: 1, to: "GraphNode name 1" }
+	var slot_connections = []
+	for connection in all_connections:
+		if connection["from"] == from and connection["from_port"] == from_slot:
+			slot_connections.append(connection)
+	for slot_connection in slot_connections:
+		$PrimaryGraphEditor.disconnect_node(slot_connection["from"], slot_connection["from_port"], slot_connection["to"], slot_connection["to_port"])
+	
 	$PrimaryGraphEditor.connect_node(from, from_slot, to, to_slot)
 
-# when there is a disconnection requrest
+# when there is a disconnection request
 func _on_PrimaryGraphEditor_disconnection_request(from, from_slot, to, to_slot):
 	$PrimaryGraphEditor.disconnect_node(from, from_slot, to, to_slot)
 
