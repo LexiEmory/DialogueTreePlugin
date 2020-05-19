@@ -13,15 +13,6 @@ const end_dialogue = preload("res://addons/dialogue_tree/scripts/EndNode.gd")
 func _ready():
 	$TopBar/TopContainer/MenuButton.get_popup().connect("id_pressed", self, "_on_menubutton_item_pressed")
 
-# add the new graph node in the center of the current view
-func _add_node_in_view(new_child):
-	# scrolloffset + center of window size / by the current zoom level 
-	new_child.offset = ($PrimaryGraphEditor.get_scroll_ofs() + $PrimaryGraphEditor.get_size() * 0.5) / $PrimaryGraphEditor.get_zoom()
-	
-	# attach child to the node graph!
-	$PrimaryGraphEditor.add_child(new_child, true)
-	
-
 # when a button on the add menu is pressed
 func _on_menubutton_item_pressed(id):
 	# add basic dialogue
@@ -30,33 +21,41 @@ func _on_menubutton_item_pressed(id):
 		basicDialogue.connect("close_request", self, "_on_node_close", [basicDialogue])
 		basicDialogue.connect("resize_request", self, "_on_node_resize", [basicDialogue])
 		
-		_add_node_in_view(basicDialogue)
+		$PrimaryGraphEditor.add_child(basicDialogue, true)
 	if id == 1:
 		var conditonalDialogue = load("res://addons/dialogue_tree/scenes/ConditonalDialogue.tscn").instance()
 		conditonalDialogue.connect("close_request", self, "_on_node_close", [conditonalDialogue])
 		conditonalDialogue.connect("resize_request", self, "_on_node_resize", [conditonalDialogue])
 		
-		_add_node_in_view(conditonalDialogue)
+		$PrimaryGraphEditor.add_child(conditonalDialogue, true)
 	if id == 2:
 		var choiceDialogue = load("res://addons/dialogue_tree/scenes/ChoiceDialogue.tscn").instance()
 		choiceDialogue.connect("close_request", self, "_on_node_close", [choiceDialogue])
 		choiceDialogue.connect("resize_request", self, "_on_node_resize", [choiceDialogue])
 		choiceDialogue.connect("removed", self, "remove_connection", [choiceDialogue])
 		
-		_add_node_in_view(choiceDialogue)
+		$PrimaryGraphEditor.add_child(choiceDialogue, true)
 	if id == 3:
 		var randomDialogue = load("res://addons/dialogue_tree/scenes/RandomDialogue.tscn").instance()
 		randomDialogue.connect("close_request", self, "_on_node_close", [randomDialogue])
 		randomDialogue.connect("resize_request", self, "_on_node_resize", [randomDialogue])
 		randomDialogue.connect("removed", self, "remove_connection", [randomDialogue])
 		
-		_add_node_in_view(randomDialogue)
+		$PrimaryGraphEditor.add_child(randomDialogue, true)
 
 # when there is a connection request 
 func _on_PrimaryGraphEditor_connection_request(from, from_slot, to, to_slot):
+	var all_connections = $PrimaryGraphEditor.get_connection_list() 	# {from_port: 0, from: "GraphNode name 0", to_port: 1, to: "GraphNode name 1" }
+	var slot_connections = []
+	for connection in all_connections:
+		if connection["from"] == from and connection["from_port"] == from_slot:
+			slot_connections.append(connection)
+	for slot_connection in slot_connections:
+		$PrimaryGraphEditor.disconnect_node(slot_connection["from"], slot_connection["from_port"], slot_connection["to"], slot_connection["to_port"])
+	
 	$PrimaryGraphEditor.connect_node(from, from_slot, to, to_slot)
 
-# when there is a disconnection requrest
+# when there is a disconnection request
 func _on_PrimaryGraphEditor_disconnection_request(from, from_slot, to, to_slot):
 	$PrimaryGraphEditor.disconnect_node(from, from_slot, to, to_slot)
 
