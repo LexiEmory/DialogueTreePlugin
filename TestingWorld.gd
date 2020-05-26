@@ -1,12 +1,21 @@
 extends Node2D
 
+var apple = 5
+var basket = 0
+
 func _ready():
-	$Dialogue2.start_dialogue()
+	$Dialogue3.start_dialogue()
 	
 func _on_Dialogue2_Dialogue_Started():
 	pass 
 
 func _on_Dialogue2_Dialogue_Next(ref, actor, text):
+	if ref == "Apple" and basket > 0:
+		basket -= 1
+		apple += 1
+	elif ref == "Basket" and apple > 0:
+		basket += 1
+		apple -= 1
 	$CanvasLayer/ChoiceBasic.hide() 
 	$CanvasLayer/DialogueBasic.show()
 	
@@ -34,9 +43,12 @@ func _on_Dialogue2_Choice_Next(ref, choices):
 
 func _on_choice_pressed(id):
 	$Dialogue2.next_dialogue(id)
+	$Dialogue3.next_dialogue(id)
 
 func _on_NextTimer_timeout():
 	$Dialogue2.next_dialogue()
+	$Dialogue3.next_dialogue()
 
 func _on_Dialogue2_Conditonal_Data_Needed():
 	$Dialogue2.send_conditonal_data({"test" : "hello"})
+	$Dialogue3.send_conditonal_data({"apple" : apple, "basket" : basket})

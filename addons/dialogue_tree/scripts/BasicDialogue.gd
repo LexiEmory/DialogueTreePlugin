@@ -15,6 +15,7 @@ func save_data():
 		"rect_size_y" : rect_size.y,
 		"Actor" : $ActorNameEdit.text,
 		"Dialogue" : $DialogueEdit.text,
+		"FormattedDialogue" : $DialogueEdit.text,
 		"RefName" : $ReferenceNameEdit.text
 	}
 	
@@ -26,6 +27,7 @@ func export_values():
 		"NodeName" : name,
 		"Ref" : $ReferenceNameEdit.text,
 		"Dialogue" : $DialogueEdit.text,
+		"FormattedDialogue" : $DialogueEdit.text,
 		"Actor" : $ActorNameEdit.text
 	}
 	
